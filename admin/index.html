@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>ANSS Trace — Administration</title>
+  <link rel="stylesheet" href="/admin/styles.css" />
+</head>
+<body>
+  <div id="loginView" class="login-shell">
+    <div class="login-card">
+      <img src="/admin/anss_logo.png" alt="ANSS" class="logo" />
+      <h1>ANSS Trace</h1>
+      <p>Plateforme de veille et de gestion des signalements</p>
+      <label>Identifiant</label>
+      <input id="username" value="admin" autocomplete="username" />
+      <label>Mot de passe</label>
+      <input id="password" type="password" value="ANSS2026!" autocomplete="current-password" />
+      <button id="loginBtn">Se connecter</button>
+      <div id="loginError" class="error"></div>
+    </div>
+  </div>
+
+  <div id="appView" class="app hidden">
+    <aside class="sidebar">
+      <div class="brand">
+        <img src="/admin/anss_logo.png" alt="ANSS" />
+        <div><strong>ANSS Trace</strong><span>Administration</span></div>
+      </div>
+      <nav>
+        <button class="nav active" data-page="dashboard">Tableau de bord</button>
+        <button class="nav" data-page="reports">Signalements</button>
+        <button class="nav" data-page="users">Utilisateurs</button>
+        <button class="nav" data-page="diseases">Épidémies</button>
+      </nav>
+      <button id="logoutBtn" class="logout">Déconnexion</button>
+    </aside>
+
+    <main class="main">
+      <header>
+        <div>
+          <h2 id="pageTitle">Tableau de bord</h2>
+          <p>Supervision nationale — prototype fonctionnel</p>
+        </div>
+        <div class="pill"><span class="dot"></span> API connectée</div>
+      </header>
+
+      <section id="page-dashboard" class="page">
+        <div class="cards">
+          <div class="stat"><span>Signalements</span><strong id="statTotal">—</strong></div>
+          <div class="stat warning"><span>En attente</span><strong id="statPending">—</strong></div>
+          <div class="stat success"><span>Validés</span><strong id="statValidated">—</strong></div>
+          <div class="stat"><span>Clés publiées</span><strong id="statKeys">—</strong></div>
+          <div class="stat"><span>Épidémies actives</span><strong id="statDiseases">—</strong></div>
+        </div>
+        <div class="panel">
+          <div class="panel-head"><div><h3>Signalements récents</h3><p>Validation avant déclenchement des alertes</p></div><button id="refreshDashboard">Actualiser</button></div>
+          <div id="recentReports"></div>
+        </div>
+      </section>
+
+      <section id="page-reports" class="page hidden">
+        <div class="panel">
+          <div class="panel-head"><div><h3>Gestion des signalements</h3><p>Valider ou rejeter les déclarations reçues</p></div>
+            <select id="statusFilter"><option value="">Tous</option><option value="PENDING">En attente</option><option value="VALIDATED">Validés</option><option value="REJECTED">Rejetés</option></select>
+          </div>
+          <div id="reportsTable"></div>
+        </div>
+      </section>
+
+      <section id="page-users" class="page hidden">
+        <div class="panel">
+          <div class="panel-head"><div><h3>Utilisateurs inscrits</h3><p>Liste des comptes citoyens et appareils associés</p></div></div>
+          <div id="usersTable"></div>
+        </div>
+      </section>
+
+      <section id="page-diseases" class="page hidden">
+        <div class="grid-2">
+          <div class="panel">
+            <div class="panel-head"><div><h3>Épidémies</h3><p>Paramètres de détection modifiables sans mise à jour mobile</p></div></div>
+            <div id="diseaseList"></div>
+          </div>
+          <div class="panel">
+            <h3>Ajouter une épidémie</h3>
+            <div class="form-grid">
+              <label>Code<input id="dCode" placeholder="EX: RSV" /></label>
+              <label>Nom français<input id="dFr" placeholder="Nom FR" /></label>
+              <label>Nom arabe<input id="dAr" placeholder="الاسم" dir="rtl" /></label>
+              <label>Seuil RSSI<input id="dRssi" type="number" value="-72" /></label>
+              <label>Durée min. (min)<input id="dDuration" type="number" value="15" /></label>
+              <label class="wide">Conseil FR<textarea id="dAdviceFr"></textarea></label>
+              <label class="wide">Conseil AR<textarea id="dAdviceAr" dir="rtl"></textarea></label>
+              <button id="addDiseaseBtn" class="wide">Ajouter</button>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <div id="toast" class="toast hidden"></div>
+  <script src="/admin/app.js"></script>
+</body>
+</html>
