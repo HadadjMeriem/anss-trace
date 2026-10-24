@@ -6,7 +6,14 @@ COPY requirements.txt .
 
 RUN pip install --no-cache-dir -r requirements.txt
 
-COPY app ./app
+# Copier tout le contenu du backend
+COPY . .
+
+# Vérification pendant le build
+RUN echo "=== CONTENU /app ===" && \
+    find /app -maxdepth 4 -type f -print && \
+    echo "=== VERIFICATION ADMIN ===" && \
+    test -d /app/app/static/admin
 
 EXPOSE 10000
 
